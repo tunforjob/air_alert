@@ -17,11 +17,13 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
 
 1. Make sure HACS is installed in your Home Assistant instance.
 2. Go to HACS → Integrations → ⋮ (top right) → Custom repositories
-3. Add the URL `https://github.com/yo/air_alert` with category `Integration`
+3. Add the URL `https://github.com/tunforjob/air_alert` with category `Integration`
 4. Click `ADD`
 5. Search for "Air Alert" in HACS → Integrations
 6. Click `INSTALL`
 7. Restart Home Assistant
+
+**Note:** If you encounter an error about missing manifest.json, ensure your repository has the correct structure with the manifest.json file in the `custom_components/air_alert/` directory.
 
 ### Method 2: Manual Installation
 
