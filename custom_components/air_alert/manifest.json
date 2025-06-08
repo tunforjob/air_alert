@@ -1,10 +1,10 @@
 {
   "domain": "air_alert",
   "name": "Air Alert",
-  "documentation": "https://github.com/your-username/air_alert",
-  "issue_tracker": "https://github.com/your-username/air_alert/issues",
+  "documentation": "https://github.com/tunforjob/air_alert",
+  "issue_tracker": "https://github.com/tunforjob/air_alert/issues",
   "dependencies": [],
-  "codeowners": ["@your-username"],
+  "codeowners": ["@tunforjob"],
   "requirements": ["alerts_in_ua"],
   "version": "0.1.0",
   "config_flow": false,
