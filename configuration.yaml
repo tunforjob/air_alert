@@ -1,0 +1,9 @@
+# Air Alert Configuration
+
+# Include our custom sensor component
+sensor:
+  - platform: air_alert
+    api_token: "YOUR_API_TOKEN"  # Replace with your actual token from alerts.in.ua
+    region_type: "location_oblast"  # Type of region to monitor
+    region_name: "Харківська область"  # Name of the region to monitor
+    scan_interval: 60  # Check every 60 seconds
