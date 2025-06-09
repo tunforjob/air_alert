@@ -51,12 +51,12 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
 
 3. Clone the repository directly into your custom_components directory:
    ```bash
-   git clone https://github.com/your-username/air_alert.git custom_components/air_alert
+   git clone https://github.com/tunforjob/air_alert.git custom_components/air_alert
    ```
    
    Or download and extract the ZIP file:
    ```bash
-   wget https://github.com/your-username/air_alert/archive/main.zip
+   wget https://github.com/tunforjob/air_alert/archive/main.zip
    unzip main.zip
    mv air_alert-main/custom_components/air_alert custom_components/
    rm -rf air_alert-main main.zip
@@ -70,7 +70,7 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
 
 1. Убедитесь, что HACS установлен в вашем экземпляре Home Assistant.
 2. Перейдите в HACS → Интеграции → ⋮ (вверху справа) → Пользовательские репозитории
-3. Добавьте URL `https://github.com/your-username/air_alert` с категорией `Integration`
+3. Добавьте URL `https://github.com/tunforjob/air_alert` с категорией `Integration`
 4. Нажмите `ДОБАВИТЬ`
 5. Найдите "Air Alert" в HACS → Интеграции
 6. Нажмите `УСТАНОВИТЬ`
@@ -90,12 +90,12 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
 
 3. Клонируйте репозиторий прямо в директорию custom_components:
    ```bash
-   git clone https://github.com/your-username/air_alert.git custom_components/air_alert
+   git clone https://github.com/tunforjob/air_alert.git custom_components/air_alert
    ```
    
    Или скачайте и распакуйте ZIP-файл:
    ```bash
-   wget https://github.com/your-username/air_alert/archive/main.zip
+   wget https://github.com/tunforjob/air_alert/archive/main.zip
    unzip main.zip
    mv air_alert-main/custom_components/air_alert custom_components/
    rm -rf air_alert-main main.zip
