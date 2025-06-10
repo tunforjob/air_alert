@@ -113,8 +113,13 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
    sensor:
      - platform: air_alert
        api_token: "YOUR_API_TOKEN"  # Replace with your actual token from alerts.in.ua
+       # Вариант 1: Использование region_type и region_name
        region_type: "location_oblast"  # Type of region to monitor
-       region_name: "Харківська область"  # Name of the region to monitor
+       region_name: "Kyiv"  # Name of the region to monitor
+       
+       # Вариант 2: Использование location_uid (имеет приоритет над region_type и region_name)
+       location_uid: "YOUR_LOCATION_UID"  # Unique identifier for a location
+       
        scan_interval: 60  # Check every 60 seconds
    ```
 
@@ -134,8 +139,14 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
    sensor:
      - platform: air_alert
        api_token: "ВАШ_API_ТОКЕН"  # Замените на ваш токен с alerts.in.ua
+       
+       # Вариант 1: Использование region_type и region_name
        region_type: "location_oblast"  # Тип региона для мониторинга
-       region_name: "Харківська область"  # Название региона для мониторинга
+       region_name: "Kyiv"  # Название региона для мониторинга
+       
+       # Вариант 2: Использование location_uid (имеет приоритет над region_type и region_name)
+       # location_uid: "ВАШ_LOCATION_UID"  # Уникальный идентификатор местоположения
+       
        scan_interval: 60  # Проверять каждые 60 секунд
    ```
 
@@ -148,10 +159,13 @@ This integration monitors air alerts in Ukraine using the alerts.in.ua API and p
 | Option | Description | Required | Default |
 |--------|-------------|----------|---------|  
 | `api_token` | Your API token from alerts.in.ua | Yes | - |
-| `region_type` | Type of region to monitor (e.g., location_oblast, location_raion) | No | `location_oblast` |
-| `region_name` | Name of the region to monitor (e.g., Харківська область) | No | `Харківська область` |
+| `region_type` | Type of region to monitor (e.g., location_oblast, location_raion) | No* | `location_oblast` |
+| `region_name` | Name of the region to monitor (e.g., Kyiv) | No* | `Kyiv` |
+| `location_uid` | Unique identifier for a specific location | No* | - |
 | `name` | Name for the sensor entity | No | `Air Alert` |
 | `scan_interval` | How often to check for alerts (in seconds) | No | 60 |
+
+\* You must specify either `location_uid` OR both `region_type` and `region_name`. If `location_uid` is specified, it takes precedence over `region_type` and `region_name`.
 
 ## Creating an Automation for Xiaomi Aquara Gateway LED
 
@@ -163,6 +177,9 @@ To control your Xiaomi Aquara Gateway LED (Light_34ce00fa6b10) based on the air 
   trigger:
     - platform: state
       entity_id: sensor.air_alert
+      to: 
+        - "Alert"
+        - "Clear"
   action:
     - choose:
         # When alert is active, turn on red light
@@ -176,7 +193,12 @@ To control your Xiaomi Aquara Gateway LED (Light_34ce00fa6b10) based on the air 
                 entity_id: light.light_34ce00fa6b10
               data:
                 rgb_color: [255, 0, 0]  # Red color
-                brightness: 255  # Full brightness
+                brightness: >-
+                  {% if now().hour >= 22 or now().hour < 7 %}
+                    50  # Reduced brightness during night time (22:00 - 07:00)
+                  {% else %}
+                    255  # Full brightness during daytime
+                  {% endif %}
         # When alert is clear, turn off light
         - conditions:
             - condition: state
@@ -187,7 +209,11 @@ To control your Xiaomi Aquara Gateway LED (Light_34ce00fa6b10) based on the air 
               target:
                 entity_id: light.light_34ce00fa6b10
       # Default action if none of the conditions match
-      default: []
+      default:
+        # Turn off light for any other states (Error, unknown, unavailable)
+        - service: light.turn_off
+          target:
+            entity_id: light.light_34ce00fa6b10
   mode: single
 ```
 
@@ -203,6 +229,9 @@ You can also create this automation through the Home Assistant UI by going to **
   trigger:
     - platform: state
       entity_id: sensor.air_alert
+      to: 
+        - "Alert"
+        - "Clear"
   action:
     - choose:
         # Когда тревога активна, включить красный свет
@@ -216,7 +245,12 @@ You can also create this automation through the Home Assistant UI by going to **
                 entity_id: light.light_34ce00fa6b10
               data:
                 rgb_color: [255, 0, 0]  # Красный цвет
-                brightness: 255  # Полная яркость
+                brightness: >-
+                  {% if now().hour >= 22 or now().hour < 7 %}
+                    50  # Пониженная яркость в ночное время (22:00 - 07:00)
+                  {% else %}
+                    255  # Полная яркость в дневное время
+                  {% endif %}
         # Когда тревога отсутствует, выключить свет
         - conditions:
             - condition: state
@@ -226,7 +260,11 @@ You can also create this automation through the Home Assistant UI by going to **
             - service: light.turn_off
               target:
                 entity_id: light.light_34ce00fa6b10
-      default: []
+      default:
+        # Выключить свет при любых других состояниях ("Error", "unknown", "unavailable")
+        - service: light.turn_off
+          target:
+            entity_id: light.light_34ce00fa6b10
   mode: single
 ```
 

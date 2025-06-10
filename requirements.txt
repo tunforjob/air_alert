@@ -1,1 +1,1 @@
-alerts_in_ua
+alerts_in_ua>=0.1.0
